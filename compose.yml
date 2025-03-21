@@ -1,0 +1,19 @@
+services:
+  openvpn-client:
+    image: ghcr.io/wfg/openvpn-client
+    container_name: openvpn-client
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment:
+      - VPN_CONFIG_FILE=config.ovpn
+    volumes:
+      - ./config:/data/vpn
+    restart: unless-stopped
+
+  ssh-vpn-connection:
+    build: .
+    container_name: ssh-vpn-connection
+    network_mode: service:openvpn-client
+    command: tail -F anything
