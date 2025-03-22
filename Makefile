@@ -3,13 +3,24 @@
 build:
 	docker compose build
 
-up:
-	docker compose up -d
+up: start-vpn start-ssh start-firefox
+	
+start-vpn:
+	docker compose up -d openvpn-client
+
+start-ssh:
+	docker compose up -d ssh-vpn-connection
 	sleep 2
 	docker compose exec -it ssh-vpn-connection ./connect.sh
+
+start-firefox:
+	docker compose up -d firefox
+	sleep 2
+	docker exec -it openvpn-client iptables -t nat -A PREROUTING -p tcp --dport 5800 -j REDIRECT --to-port 5800
 
 down:
 	docker compose down --rmi 'local'
 
 clean:
 	rm -f config/*.conf
+	rm -rf firefox-data

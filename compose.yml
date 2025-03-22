@@ -4,6 +4,8 @@ services:
     container_name: openvpn-client
     cap_add:
       - NET_ADMIN
+    ports:
+      - "5800:5800"
     devices:
       - /dev/net/tun
     environment:
@@ -17,3 +19,9 @@ services:
     container_name: ssh-vpn-connection
     network_mode: service:openvpn-client
     command: tail -F anything
+  
+  firefox:
+    image: jlesage/firefox
+    network_mode: service:openvpn-client
+    volumes:
+      - "./firefox-data:/config:rw"
