@@ -3,7 +3,7 @@
 build:
 	docker compose build
 
-up: start-vpn start-proxy start-ssh
+up: start-vpn start-ssh
 	
 start-vpn:
 	docker compose up -d openvpn-client

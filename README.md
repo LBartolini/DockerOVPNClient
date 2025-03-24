@@ -9,3 +9,5 @@ If you want to use this you can change the remote username for the SSH connectio
 Add configuration file *.ovpn inside the config folder with name config.ovpn (if you want to use a different name, change it also in the Compose file).
 
 Then proceed with the usual make commands: build, up, down.
+
+For proxy: make start-proxy, and inside ssh connection start the firefox container inside server.
